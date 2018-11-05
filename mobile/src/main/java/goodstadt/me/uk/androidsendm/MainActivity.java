@@ -402,6 +402,7 @@ public class MainActivity extends AppCompatActivity{
                                             posParams.height = 100;
                                             posParams.gravity = Gravity.CENTER_HORIZONTAL;
                                             positiveButton.setGravity(Gravity.CENTER);
+                                            positiveButton.setTextSize(25);
                                             positiveButton.setPadding(0,0,0,0);
 
                                             alertDescription = payloadContent.substring(3, payloadContent.length());
@@ -443,25 +444,35 @@ public class MainActivity extends AppCompatActivity{
                                                 }
                                             });
 
-                                            orangeAlert.show();
-                                            TextView textView = (TextView) orangeAlert.findViewById(android.R.id.message);
-                                            textView.setTextSize(20);
-                                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                                            textView.setHeight(300);
-                                            textView.setWidth(300);
-                                            textView.setBackgroundResource(R.drawable.textview_orange);
+                                            if (alertFlagRed == 1){
 
-                                            final Button positiveButton = orangeAlert.getButton(AlertDialog.BUTTON_POSITIVE);
-                                            LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
-                                            posParams.weight = 1;
-                                            posParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
-                                            posParams.height = 100;
-                                            posParams.gravity = Gravity.CENTER_HORIZONTAL;
-                                            positiveButton.setGravity(Gravity.CENTER);
-                                            positiveButton.setPadding(0,0,0,0);
+                                                alertDescription = payloadContent.substring(3, payloadContent.length());
+                                                alertDescriptionBank.add(alertDescription);
 
-                                            alertDescription = payloadContent.substring(3, payloadContent.length());
-                                            alertDescriptionBank.add(alertDescription);
+                                            } else if (alertFlagRed == 0) {
+
+                                                orangeAlert.show();
+                                                TextView textView = (TextView) orangeAlert.findViewById(android.R.id.message);
+                                                textView.setTextSize(20);
+                                                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                                                textView.setHeight(300);
+                                                textView.setWidth(300);
+                                                textView.setBackgroundResource(R.drawable.textview_orange);
+
+                                                final Button positiveButton = orangeAlert.getButton(AlertDialog.BUTTON_POSITIVE);
+                                                LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
+                                                posParams.weight = 1;
+                                                posParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                                                posParams.height = 100;
+                                                posParams.gravity = Gravity.CENTER_HORIZONTAL;
+                                                positiveButton.setGravity(Gravity.CENTER);
+                                                positiveButton.setTextSize(25);
+                                                positiveButton.setPadding(0,0,0,0);
+
+                                                alertDescription = payloadContent.substring(3, payloadContent.length());
+                                                alertDescriptionBank.add(alertDescription);
+
+                                            }
 
                                         } else if (payloadContent.startsWith("(L)")) {
                                             colors.add("#FFFF00");
@@ -500,35 +511,47 @@ public class MainActivity extends AppCompatActivity{
                                                 }
                                             });
 
-                                            yellowAlert.show();
+                                            if (alertFlagRed == 1 | alertFlagOrange == 1) {
 
-                                            TextView textView = (TextView) yellowAlert.findViewById(android.R.id.message);
-                                            textView.setTextSize(20);
-                                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                                            textView.setHeight(300);
-                                            textView.setWidth(300);
-                                            textView.setBackgroundResource(R.drawable.textview_yellow);
+                                                alertDescription = payloadContent.substring(3, payloadContent.length());
+                                                alertDescriptionBank.add(alertDescription);
 
-                                            final Button positiveButton = yellowAlert.getButton(AlertDialog.BUTTON_POSITIVE);
-                                            LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
-                                            posParams.weight = 1;
-                                            posParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
-                                            posParams.height = 100;
-                                            posParams.gravity = Gravity.CENTER_HORIZONTAL;
-                                            positiveButton.setGravity(Gravity.CENTER);
-                                            positiveButton.setPadding(0,0,0,0);
+                                            } else if (alertFlagRed == 0 && alertFlagOrange == 0) {
 
-                                            alertDescription = payloadContent.substring(3, payloadContent.length());
-                                            alertDescriptionBank.add(alertDescription);
+                                                yellowAlert.show();
+                                                TextView textView = (TextView) yellowAlert.findViewById(android.R.id.message);
+                                                textView.setTextSize(20);
+                                                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                                                textView.setHeight(300);
+                                                textView.setWidth(300);
+                                                textView.setBackgroundResource(R.drawable.textview_yellow);
+
+                                                final Button positiveButton = yellowAlert.getButton(AlertDialog.BUTTON_POSITIVE);
+                                                LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
+                                                posParams.weight = 1;
+                                                posParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                                                posParams.height = 100;
+                                                posParams.gravity = Gravity.CENTER_HORIZONTAL;
+                                                positiveButton.setGravity(Gravity.CENTER);
+                                                positiveButton.setTextSize(25);
+                                                positiveButton.setPadding(0,0,0,0);
+
+                                                alertDescription = payloadContent.substring(3, payloadContent.length());
+                                                alertDescriptionBank.add(alertDescription);
+
+                                            }
 
                                         } else if (payloadContent.startsWith("(UM)")) {
+
                                             alertDescription = payloadContent.substring(4, payloadContent.length());
                                             createMissionOverviewAlert("Mission: " + alertDescription);
                                             alertDescription = "MISSION UPDATED";
                                             Vibrator yellowVib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                                             yellowVib.vibrate(vibrateMessageUpdate, -1);
                                             createAlertDescription();
+
                                         }
+
                                         pointPercentage.setText(progressPoints + "%");
                                         prg.setMax(100);
                                         prg.setProgress(progressPoints);
@@ -683,6 +706,7 @@ public class MainActivity extends AppCompatActivity{
                 posParams.height = 100;
                 posParams.gravity = Gravity.CENTER_HORIZONTAL;
                 positiveButton.setGravity(Gravity.CENTER);
+                positiveButton.setTextSize(25);
                 positiveButton.setPadding(0,0,0,0);
 
                 alertDescribeFlag = 1; // Alert is shown, set flag so that onSensorChange event knows to remove alert
