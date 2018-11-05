@@ -646,25 +646,34 @@ public class MainActivity extends WearableActivity {
 
                     orangeAlert.setMessage("Medium Priority Alert Available\n(" + timer.getText() + ")");
                     alertFlagOrange = 1; // Alert is shown, set flag so that onSensorChange event knows to remove alert
-                    orangeAlert.show();
-                    TextView textView = (TextView) orangeAlert.findViewById(android.R.id.message);
-                    textView.setTextSize(20);
-                    textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                    textView.setHeight(300);
-                    textView.setWidth(300);
-                    textView.setBackgroundResource(R.drawable.textview_orange);
+                    if (alertFlagRed == 1){
 
-                    final Button positiveButton = orangeAlert.getButton(AlertDialog.BUTTON_POSITIVE);
-                    LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
-                    posParams.weight = 1;
-                    posParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
-                    posParams.height = 100;
-                    posParams.gravity = Gravity.CENTER_HORIZONTAL;
-                    positiveButton.setGravity(Gravity.CENTER);
-                    positiveButton.setPadding(0,0,0,0);
+                        alertDescription = payloadContent.substring(3, payloadContent.length());
+                        alertDescriptionBank.add(alertDescription);
 
-                    alertDescription = payloadContent.substring(3, payloadContent.length());
-                    alertDescriptionBank.add(alertDescription);
+                    } else if (alertFlagRed == 0) {
+
+                        orangeAlert.show();
+                        TextView textView = (TextView) orangeAlert.findViewById(android.R.id.message);
+                        textView.setTextSize(20);
+                        textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textView.setHeight(300);
+                        textView.setWidth(300);
+                        textView.setBackgroundResource(R.drawable.textview_orange);
+
+                        final Button positiveButton = orangeAlert.getButton(AlertDialog.BUTTON_POSITIVE);
+                        LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
+                        posParams.weight = 1;
+                        posParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                        posParams.height = 100;
+                        posParams.gravity = Gravity.CENTER_HORIZONTAL;
+                        positiveButton.setGravity(Gravity.CENTER);
+                        positiveButton.setPadding(0,0,0,0);
+
+                        alertDescription = payloadContent.substring(3, payloadContent.length());
+                        alertDescriptionBank.add(alertDescription);
+
+                    }
 
                 } else if (payloadContent.startsWith("(L)")) {
                     colors.add("#FFFF00");
@@ -694,25 +703,34 @@ public class MainActivity extends WearableActivity {
 
                     yellowAlert.setMessage("Low Priority Alert Available\n(" + timer.getText() + ")");
                     alertFlagYellow = 1; // Alert is shown, set flag so that onSensorChange event knows to remove alert
-                    yellowAlert.show();
-                    TextView textView = (TextView) yellowAlert.findViewById(android.R.id.message);
-                    textView.setTextSize(20);
-                    textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                    textView.setHeight(300);
-                    textView.setWidth(300);
-                    textView.setBackgroundResource(R.drawable.textview_yellow);
+                    if (alertFlagRed == 1 | alertFlagOrange == 1) {
 
-                    final Button positiveButton = yellowAlert.getButton(AlertDialog.BUTTON_POSITIVE);
-                    LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
-                    posParams.weight = 1;
-                    posParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
-                    posParams.height = 100;
-                    posParams.gravity = Gravity.CENTER_HORIZONTAL;
-                    positiveButton.setGravity(Gravity.CENTER);
-                    positiveButton.setPadding(0,0,0,0);
+                        alertDescription = payloadContent.substring(3, payloadContent.length());
+                        alertDescriptionBank.add(alertDescription);
 
-                    alertDescription = payloadContent.substring(3, payloadContent.length());
-                    alertDescriptionBank.add(alertDescription);
+                    } else if (alertFlagRed == 0 && alertFlagOrange == 0) {
+
+                        yellowAlert.show();
+                        TextView textView = (TextView) yellowAlert.findViewById(android.R.id.message);
+                        textView.setTextSize(20);
+                        textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textView.setHeight(300);
+                        textView.setWidth(300);
+                        textView.setBackgroundResource(R.drawable.textview_yellow);
+
+                        final Button positiveButton = yellowAlert.getButton(AlertDialog.BUTTON_POSITIVE);
+                        LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
+                        posParams.weight = 1;
+                        posParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                        posParams.height = 100;
+                        posParams.gravity = Gravity.CENTER_HORIZONTAL;
+                        positiveButton.setGravity(Gravity.CENTER);
+                        positiveButton.setPadding(0,0,0,0);
+
+                        alertDescription = payloadContent.substring(3, payloadContent.length());
+                        alertDescriptionBank.add(alertDescription);
+
+                    }
 
                 } else if (payloadContent.startsWith("(UM)")) {
                     alertDescription = payloadContent.substring(4, payloadContent.length());
