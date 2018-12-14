@@ -245,8 +245,8 @@ public class MainActivity extends AppCompatActivity{
 
                 try {
                     mqtt.setHost("tcp://" + input.getText().toString() + ":1883");
-                    timer.setBase(SystemClock.elapsedRealtime());
-                    timer.start();
+                    // timer.setBase(SystemClock.elapsedRealtime());
+                    // timer.start();
 
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
@@ -349,11 +349,19 @@ public class MainActivity extends AppCompatActivity{
                                         packageAndSendMessage(APP_ACTIVITY_PATH, map);
 
                                         payloadContent = payloadContent.substring(7, payloadContent.length());
-                                        if (payloadContent.startsWith("(H)")) {
+                                        if (payloadContent.startsWith("(S)")){
+
+                                            timer.setBase(SystemClock.elapsedRealtime());
+                                            timer.start();
+
+                                        } else if (payloadContent.startsWith("(H)")) {
+
+                                            alertDescription = payloadContent.substring(3, payloadContent.length());
+                                            alertDescriptionBank.add(alertDescription);
 
                                             colors.add("#ff0000");
-                                            progressPoints -= 7;
-                                            arrayList.add("High Priority Alert\n(" + timer.getText() + ")");
+                                            // progressPoints -= 7;
+                                            arrayList.add(alertDescription + "\n(" + timer.getText() + ")");
                                             adapter.notifyDataSetChanged();
 
                                             Vibrator redVib = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
@@ -366,7 +374,7 @@ public class MainActivity extends AppCompatActivity{
                                                     new DialogInterface.OnClickListener() {
                                                         public void onClick(DialogInterface dialog, int id) {
                                                             alertFlagRed = 0;
-                                                            createAlertDescription();
+                                                            //createAlertDescription();
                                                         }
                                                     });
 
@@ -377,7 +385,7 @@ public class MainActivity extends AppCompatActivity{
 
                                             redAlert.getWindow().setBackgroundDrawableResource(R.drawable.textview_red);
 
-                                            redAlert.setMessage("High Priority Alert Available\n(" + timer.getText() + ")");
+                                            redAlert.setMessage(alertDescription + "\n(" + timer.getText() + ")");
                                             alertFlagRed = 1; // Alert is shown, set flag so that onSensorChange event knows to remove alert
 
                                             redAlert.setOnShowListener( new DialogInterface.OnShowListener() {
@@ -405,13 +413,20 @@ public class MainActivity extends AppCompatActivity{
                                             positiveButton.setTextSize(25);
                                             positiveButton.setPadding(0,0,0,0);
 
-                                            alertDescription = payloadContent.substring(3, payloadContent.length());
-                                            alertDescriptionBank.add(alertDescription);
+                                            orangeAlert.dismiss();
+                                            alertFlagOrange = 0;
+                                            yellowAlert.dismiss();
+                                            alertFlagYellow = 0;
+
+
 
                                         } else if (payloadContent.startsWith("(M)")) {
+
+                                            alertDescription = payloadContent.substring(3, payloadContent.length());
+
                                             colors.add("#FF8C00"); // value used by getView in arrayAdapter
-                                            progressPoints -= 5;
-                                            arrayList.add("Medium Priority Alert\n(" + timer.getText() + ")");
+                                            // progressPoints -= 5;
+                                            arrayList.add(alertDescription + "\n(" + timer.getText() + ")");
                                             adapter.notifyDataSetChanged();
 
                                             Vibrator orangeVib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -423,7 +438,7 @@ public class MainActivity extends AppCompatActivity{
                                                     new DialogInterface.OnClickListener() {
                                                         public void onClick(DialogInterface dialog, int id) {
                                                             alertFlagOrange = 0;
-                                                            createAlertDescription();
+                                                            //createAlertDescription();
                                                         }
                                                     });
 
@@ -434,7 +449,7 @@ public class MainActivity extends AppCompatActivity{
 
                                             orangeAlert.getWindow().setBackgroundDrawableResource(R.drawable.textview_orange);
 
-                                            orangeAlert.setMessage("Medium Priority Alert Available\n(" + timer.getText() + ")");
+                                            orangeAlert.setMessage(alertDescription + "\n(" + timer.getText() + ")");
                                             alertFlagOrange = 1; // Alert is shown, set flag so that onSensorChange event knows to remove alert
 
                                             orangeAlert.setOnShowListener( new DialogInterface.OnShowListener() {
@@ -446,7 +461,6 @@ public class MainActivity extends AppCompatActivity{
 
                                             if (alertFlagRed == 1){
 
-                                                alertDescription = payloadContent.substring(3, payloadContent.length());
                                                 alertDescriptionBank.add(alertDescription);
 
                                             } else if (alertFlagRed == 0) {
@@ -472,12 +486,18 @@ public class MainActivity extends AppCompatActivity{
                                                 alertDescription = payloadContent.substring(3, payloadContent.length());
                                                 alertDescriptionBank.add(alertDescription);
 
+                                                yellowAlert.dismiss();
+                                                alertFlagYellow = 0;
+
                                             }
 
                                         } else if (payloadContent.startsWith("(L)")) {
+
+                                            alertDescription = payloadContent.substring(3, payloadContent.length());
+
                                             colors.add("#FFFF00");
-                                            progressPoints -= 3;
-                                            arrayList.add("Low Priority Alert\n(" + timer.getText() + ")");
+                                            // progressPoints -= 3;
+                                            arrayList.add(alertDescription + "\n(" + timer.getText() + ")");
                                             adapter.notifyDataSetChanged();
 
                                             Vibrator yellowVib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -490,7 +510,7 @@ public class MainActivity extends AppCompatActivity{
                                                     new DialogInterface.OnClickListener() {
                                                         public void onClick(DialogInterface dialog, int id) {
                                                             alertFlagYellow = 0;
-                                                            createAlertDescription();
+                                                            //createAlertDescription();
                                                         }
                                                     });
 
@@ -501,7 +521,7 @@ public class MainActivity extends AppCompatActivity{
 
                                             yellowAlert.getWindow().setBackgroundDrawableResource(R.drawable.textview_yellow);
 
-                                            yellowAlert.setMessage("Low Priority Alert Available\n(" + timer.getText() + ")");
+                                            yellowAlert.setMessage(alertDescription + "\n(" + timer.getText() + ")");
                                             alertFlagYellow = 1; // Alert is shown, set flag so that onSensorChange event knows to remove alert
 
                                             yellowAlert.setOnShowListener( new DialogInterface.OnShowListener() {
@@ -513,7 +533,6 @@ public class MainActivity extends AppCompatActivity{
 
                                             if (alertFlagRed == 1 | alertFlagOrange == 1) {
 
-                                                alertDescription = payloadContent.substring(3, payloadContent.length());
                                                 alertDescriptionBank.add(alertDescription);
 
                                             } else if (alertFlagRed == 0 && alertFlagOrange == 0) {
