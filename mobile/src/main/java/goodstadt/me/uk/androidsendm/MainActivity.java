@@ -569,6 +569,10 @@ public class MainActivity extends AppCompatActivity{
                                             yellowVib.vibrate(vibrateMessageUpdate, -1);
                                             createAlertDescription();
 
+                                        } else if (payloadContent.startsWith("(MCI)")) {
+
+                                            progressPoints = Integer.valueOf(payloadContent.substring(5, payloadContent.length()));
+
                                         }
 
                                         pointPercentage.setText(progressPoints + "%");
